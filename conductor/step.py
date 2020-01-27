@@ -42,7 +42,8 @@ from conductor import retval
 class Step():
 
     def __init__(self, command, spawn=False, timeout=30):
-        self.args = shlex.split(command)
+        #self.args = shlex.split(command)
+        self.args=command
         self.spawn = spawn
         self.timeout = timeout
         
@@ -54,7 +55,7 @@ class Step():
             try:
                 output = subprocess.check_output(self.args,
                                                  timeout=self.timeout,
-                                                 universal_newlines=True)
+                                                 universal_newlines=True, shell=True)
             except subprocess.CalledProcessError as err:
                 print ("Code: ", err.returncode, "Command: ", err.cmd,
                        "Output: ", err.output)
