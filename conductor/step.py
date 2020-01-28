@@ -54,6 +54,7 @@ class Step():
             return retval.RetVal(0, "Spawned")
         else:
             try:
+                print(self.args)
                 output = subprocess.check_output(self.args,
                                                  timeout=self.timeout,
                                                  universal_newlines=True, shell=True)
