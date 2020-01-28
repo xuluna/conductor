@@ -12,8 +12,8 @@
 # notice, this list of conditions and the following disclaimer in the
 # documentation and/or other materials provided with the distribution.
 #
-# Neither the name of Neville-Neil Consulting nor the names of its 
-# contributors may be used to endorse or promote products derived from 
+# Neither the name of Neville-Neil Consulting nor the names of its
+# contributors may be used to endorse or promote products derived from
 # this software without specific prior written permission.
 #
 # THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
@@ -39,18 +39,19 @@ import shlex
 
 from conductor import retval
 
+
 class Step():
 
     def __init__(self, command, spawn=False, timeout=30):
         #self.args = shlex.split(command)
-        self.args=command
+        self.args = command
         self.spawn = spawn
         self.timeout = timeout
-        
+
     def run(self):
         if self.spawn == True:
-                output = subprocess.Popen(self.args)
-                return retval.RetVal(0, "Spawned")
+            output = subprocess.Popen(self.args)
+            return retval.RetVal(0, "Spawned")
         else:
             try:
                 output = subprocess.check_output(self.args,
@@ -67,7 +68,7 @@ class Step():
                 print ("Success: ", output)
                 ret = retval.RetVal(0, output)
             return ret
-            
+
     def ready(self):
         """Tell the server we're ready to go."""
         pass
