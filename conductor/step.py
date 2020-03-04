@@ -67,7 +67,7 @@ class Step():
                 ret = retval.RetVal(0, "Timeout")
             else:
                 print ("Success: ", output)
-                ret = retval.RetVal(0, output)
+                ret = retval.RetVal(0, "Success: " + output)
             return ret
 
     def ready(self):
