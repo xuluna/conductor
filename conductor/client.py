@@ -46,7 +46,7 @@ from conductor import retval
 
 class Client():
 
-    def __init__(self, config):
+    def __init__(self, config, ressock):
         """Load up all the config data, including all phases"""
         master = config['Master']
         self.conductor = master['conductor']
@@ -111,12 +111,6 @@ class Client():
         splat = pickle.dumps(run.Run(), pickle.HIGHEST_PROTOCOL)
         cmd.sendall(splat)
         cmd.close()
-        # Setup the callback socket for the player now
-        self.ressock = socket.socket(socket.AF_INET, socket.SOCK_STREAM, 0)
-        self.ressock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        self.ressock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
-        self.ressock.bind(('0.0.0.0', self.resultport))
-        self.ressock.listen(5)
 
     def results(self):
         """Retrieve all the results from the player for the current phase"""
@@ -134,7 +128,7 @@ class Client():
                 else:
                     print (message.code, message.message)
             sock.close()
-        self.ressock.close()
+       # self.ressock.close()
 
     def startup(self):
         """Push the startup phase to the player"""

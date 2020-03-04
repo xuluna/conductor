@@ -49,13 +49,20 @@ def __main__():
     test_config.read_file(master)
 
     defaults = test_config['Test']
+
+    # Setup the callback socket for the player now
+    ressock = socket.socket(socket.AF_INET, socket.SOCK_STREAM, 0)
+    ressock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    ressock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
+    ressock.bind(('0.0.0.0', self.resultport))
+    ressock.listen(5)
     
     clients = []
     for i in test_config['Clients']:
         client_config = configparser.ConfigParser()
         file = open(test_config['Clients'][i])
         client_config.read_file(file)
-        clients.append(client.Client(client_config))
+        clients.append(client.Client(client_config, ressock))
         file.close()
         
     master.close()
@@ -90,6 +97,8 @@ def __main__():
             nextclient.doit()
         for nextclient in clients:
             nextclient.results()
+    
+    ressock.close()
 
 if __name__ == "__main__":
     __main__()
