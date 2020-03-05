@@ -63,7 +63,6 @@ class Player():
     def run(self):
         """Run through our work queue"""
         while not self.done:
-            print ("I'm in palyer")
             sock,addr = self.cmdsock.accept()
             data = sock.recv(65536)
             message = pickle.loads(data)

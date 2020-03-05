@@ -117,11 +117,9 @@ class Client():
         """Retrieve all the results from the player for the current phase"""
         done = False
         while not done:
-            print ("I'm in conductor")
             sock, addr = self.ressock.accept()
             data = self.len_recv(sock)
             message = pickle.loads(data)
-            print (message)
             if type(message) == retval.RetVal:
                 if message.code == retval.RETVAL_DONE:
                     print ("done")
