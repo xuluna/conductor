@@ -54,6 +54,7 @@ class Client():
         self.cmdport = int(master['cmdport'])
         self.resultport = int(master['resultsport'])
         self.timeout = int(master['timeout'])
+        self.ressock = ressock
 
         self.startup_phase = phase.Phase(self.conductor, self.resultport)
         for i in config['Startup']:
